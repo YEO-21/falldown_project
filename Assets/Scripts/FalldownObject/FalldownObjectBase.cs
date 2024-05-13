@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Falldown 오브젝트 타입을 나타내기 위한 열거 형식입니다.
+/// </summary>
+public enum FalldownObjectType : sbyte
+{
+    Trash,
+    Fish
+}
+
 
 /// <summary>
 /// 떨어지는 오브젝트를 나타내기 위한 클래스입니다.
 /// 이 클래스는 쓰레기와 물고기 클래스로 나뉘며, 상속을 통해 사용되도록 설계되었습니다.
 /// </summary>
-public class FalldownObjectBase : MonoBehaviour
+public abstract class FalldownObjectBase : MonoBehaviour
 {
     /// <summary>
     /// 캐릭터와 충돌 시 캐릭터에게 가해질 피해량을 나타냅니다.
