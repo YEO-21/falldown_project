@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 ///  플레이어 캐릭터 객체를 나타내는 컴포넌트
 /// </summary>
-public sealed class PlayerCharacter : MonoBehaviour
+public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
 {
     /// <summary>
     /// 이동 컴포넌트를 나타냅니다.
@@ -42,5 +42,20 @@ public sealed class PlayerCharacter : MonoBehaviour
         else if (Input.GetKey(KeyCode.RightArrow)) horizontalAxisValue += 1.0f;
 
         return horizontalAxisValue;
+    }
+
+    void IFallingObjectCollisionable.OnTrashObjectDetected(float damage)
+    {
+        Debug.Log($"쓰레기 오브젝트 감지됨 damage : {damage}");
+    }
+
+    void IFallingObjectCollisionable.OnFishObjectDetected(float recoveryHpValue)
+    {
+        Debug.Log($"물고기 오브젝트 감지됨 recHp : {recoveryHpValue}");
+    }
+
+    void IFallingObjectCollisionable.AddScore(float score)
+    {
+        Debug.Log($"점수 추가됨 score : {score}");
     }
 }

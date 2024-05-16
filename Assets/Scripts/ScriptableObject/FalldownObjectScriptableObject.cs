@@ -43,7 +43,7 @@ public sealed class FalldownObjectScriptableObject : ScriptableObject
         m_FalldownObjectInfos.FindAll(elem => elem.m_Type == type);
 
         // 리스트 요소중 랜덤한 요소의 인덱스를 얻습니다.
-        int randomIndex = Random.Range(0, m_FalldownObjectInfos.Count);
+        int randomIndex = Random.Range(0, findedFalldownObjectInfos.Count);
 
         // 뽑은 요소(오브젝트 정보)를 반환합니다.
         return findedFalldownObjectInfos[randomIndex];

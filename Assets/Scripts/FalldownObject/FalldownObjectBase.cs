@@ -31,15 +31,20 @@ public abstract class FalldownObjectBase : MonoBehaviour
     /// <summary>
     /// 캐릭터와 충돌 시 변화시킬 점수를 나타냅니다.
     /// </summary>
-    protected float m_AddScore;
+    private float _AddScore;
 
     /// <summary>
     /// 생성된 시간을 기록할 변수입니다.
     /// </summary>
     private float _GeneratedTime;
 
+    /// <summary>
+    /// 이 오브젝트와 충돌 가능한 객체의 기능을 나타냅니다.
+    /// </summary>
+    protected IFallingObjectCollisionable collisionableObject { get; private set; }
 
-    private void Update()
+
+    protected virtual void Update()
     {
         // 제거 타이머
         DestroyTimer();
@@ -73,17 +78,31 @@ public abstract class FalldownObjectBase : MonoBehaviour
         //if (other.tag.CompareTo("Player") == 0) ;
         if (other.CompareTag("Player"))
         {
-            Debug.Log("플레이어 캐릭터 감지!");
-
+            OnCollisionableObjectDetected();
         }
     }
 
     /// <summary>
     /// 오브젝트 내용을 초기화합니다.
     /// </summary>
-    public void Initialize()
+    /// <param name="collisionableObject">충돌 가능 객체를 전달합니다.</param>
+    public void Initialize(IFallingObjectCollisionable collisionableObject)
     {
+        this.collisionableObject = collisionableObject;
+
         // 생성 시간을 기록합니다.
         _GeneratedTime = Time.time;
+    }
+
+    /// <summary>
+    /// 이 오브젝트가 충돌 가능한 객체를 감지한 경우 호출됩니다.
+    /// </summary>
+    protected virtual void OnCollisionableObjectDetected()
+    {
+        // 점수 변경
+        collisionableObject.AddScore(_AddScore);
+
+        // 오브젝트 제거
+        Destroy(gameObject);
     }
 }
