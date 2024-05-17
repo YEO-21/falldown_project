@@ -15,6 +15,9 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
 
     private void Awake()
     {
+        // 플레이어 상태 객체 초기화
+        GameManager.instance.playerState.Initialize();
+
         // 사용되는 컴포넌트를 미리 찾습니다.
         _Movement = GetComponent<PlayerCharacterMovement>();
     }
@@ -22,6 +25,7 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
 
     private void Update()
     {
+
         // 수평 축 입력
         float horizontalAxisValue = HorizontalInput();
 
@@ -46,16 +50,17 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
 
     void IFallingObjectCollisionable.OnTrashObjectDetected(float damage)
     {
-        Debug.Log($"쓰레기 오브젝트 감지됨 damage : {damage}");
+        GameManager.instance.playerState.AddHp(-damage);
     }
 
     void IFallingObjectCollisionable.OnFishObjectDetected(float recoveryHpValue)
     {
-        Debug.Log($"물고기 오브젝트 감지됨 recHp : {recoveryHpValue}");
+        GameManager.instance.playerState.AddHp(recoveryHpValue);
+
     }
 
     void IFallingObjectCollisionable.AddScore(float score)
     {
-        Debug.Log($"점수 추가됨 score : {score}");
+        GameManager.instance.playerState.AddScore(score);
     }
 }

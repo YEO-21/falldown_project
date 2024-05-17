@@ -35,6 +35,7 @@ public sealed class FalldownObjectGenerator : MonoBehaviour
         StartCoroutine(GenerateFalldownObject());
     }
 
+  
 
     /// <summary>
     /// Falldown 오브젝트를 생성합니다.
@@ -79,7 +80,8 @@ public sealed class FalldownObjectGenerator : MonoBehaviour
         // 해당 컴포넌트를 소유하는 오브젝트를 복사 생성하고, 추가되어있는 컴포넌트를 반환합니다.
 
         //생성된 오브젝트의 내용을 초기화합니다.
-        generatedFalldownObject.Initialize(m_PlayerCharacter);
+        generatedFalldownObject.Initialize(m_PlayerCharacter,
+            info.m_HitDamage, info.m_RecoverageHp, info.m_AddScore);
 
         // 생성된 오브젝트의 위치를 랜덤하게 설정합니다.
         generatedFalldownObject.transform.position = randomGenPosition;

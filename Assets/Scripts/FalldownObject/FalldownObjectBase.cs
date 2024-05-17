@@ -86,9 +86,16 @@ public abstract class FalldownObjectBase : MonoBehaviour
     /// 오브젝트 내용을 초기화합니다.
     /// </summary>
     /// <param name="collisionableObject">충돌 가능 객체를 전달합니다.</param>
-    public void Initialize(IFallingObjectCollisionable collisionableObject)
+    /// <param name="hitDamage">오브젝트의 피해량을 전달합니다.</param>
+    /// <param name="recoveryHp">체력 회복량을 전달합니다.</param>
+    /// <param name="AddScore">점수 변화량을 전달합니다.</param>
+    public void Initialize(IFallingObjectCollisionable collisionableObject,
+        float hitDamage, float recoveryHp, float AddScore)
     {
         this.collisionableObject = collisionableObject;
+        m_HitDamage = hitDamage;
+        m_RecoveryHp = recoveryHp;
+        _AddScore = AddScore;
 
         // 생성 시간을 기록합니다.
         _GeneratedTime = Time.time;
