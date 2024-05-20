@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Falldown 오브젝트 타입을 나타내기 위한 열거 형식입니다.
+/// </summary>
+public enum FalldownObjectType : sbyte
+{
+    Trash,
+    Fish
+}
+
 
 /// <summary>
 /// 떨어지는 오브젝트를 나타내기 위한 클래스입니다.
 /// 이 클래스는 쓰레기와 물고기 클래스로 나뉘며, 상속을 통해 사용되도록 설계되었습니다.
 /// </summary>
-public class FalldownObjectBase : MonoBehaviour
+public abstract class FalldownObjectBase : MonoBehaviour
 {
     /// <summary>
     /// 캐릭터와 충돌 시 캐릭터에게 가해질 피해량을 나타냅니다.
@@ -22,15 +31,20 @@ public class FalldownObjectBase : MonoBehaviour
     /// <summary>
     /// 캐릭터와 충돌 시 변화시킬 점수를 나타냅니다.
     /// </summary>
-    protected float m_AddScore;
+    private float _AddScore;
 
     /// <summary>
     /// 생성된 시간을 기록할 변수입니다.
     /// </summary>
     private float _GeneratedTime;
 
+    /// <summary>
+    /// 이 오브젝트와 충돌 가능한 객체의 기능을 나타냅니다.
+    /// </summary>
+    protected IFallingObjectCollisionable collisionableObject { get; private set; }
 
-    private void Update()
+
+    protected virtual void Update()
     {
         // 제거 타이머
         DestroyTimer();
@@ -64,17 +78,38 @@ public class FalldownObjectBase : MonoBehaviour
         //if (other.tag.CompareTo("Player") == 0) ;
         if (other.CompareTag("Player"))
         {
-            Debug.Log("플레이어 캐릭터 감지!");
-
+            OnCollisionableObjectDetected();
         }
     }
 
     /// <summary>
     /// 오브젝트 내용을 초기화합니다.
     /// </summary>
-    public void Initialize()
+    /// <param name="collisionableObject">충돌 가능 객체를 전달합니다.</param>
+    /// <param name="hitDamage">오브젝트의 피해량을 전달합니다.</param>
+    /// <param name="recoveryHp">체력 회복량을 전달합니다.</param>
+    /// <param name="AddScore">점수 변화량을 전달합니다.</param>
+    public void Initialize(IFallingObjectCollisionable collisionableObject,
+        float hitDamage, float recoveryHp, float AddScore)
     {
+        this.collisionableObject = collisionableObject;
+        m_HitDamage = hitDamage;
+        m_RecoveryHp = recoveryHp;
+        _AddScore = AddScore;
+
         // 생성 시간을 기록합니다.
         _GeneratedTime = Time.time;
+    }
+
+    /// <summary>
+    /// 이 오브젝트가 충돌 가능한 객체를 감지한 경우 호출됩니다.
+    /// </summary>
+    protected virtual void OnCollisionableObjectDetected()
+    {
+        // 점수 변경
+        collisionableObject.AddScore(_AddScore);
+
+        // 오브젝트 제거
+        Destroy(gameObject);
     }
 }

@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d84b8c46b9ff2eb49852beba1571910a, type: 3}
+  m_Name: FalldownObjectInfo
+  m_EditorClassIdentifier: 
+  m_FalldownObjectInfos:
+  - m_Type: 1
+    m_FalldownObjectPrefab: {fileID: 5902181989717796114, guid: 10653463b0c90ee448cd77751c93633f,
+      type: 3}
+    m_HitDamage: 0
+    m_RecoverageHp: 30
+    m_AddScore: 50
+  - m_Type: 1
+    m_FalldownObjectPrefab: {fileID: 2793018335095353325, guid: 26b6c7608f047f74093ab3707d26f26a,
+      type: 3}
+    m_HitDamage: 0
+    m_RecoverageHp: 60
+    m_AddScore: 100
+  - m_Type: 1
+    m_FalldownObjectPrefab: {fileID: -3083781253184845969, guid: 68bfd4421fae6fb48924501e206d15e1,
+      type: 3}
+    m_HitDamage: 0
+    m_RecoverageHp: 30
+    m_AddScore: 70
+  - m_Type: 0
+    m_FalldownObjectPrefab: {fileID: -4506462992015228096, guid: 425b4b3580acc924c9021daca8db88d5,
+      type: 3}
+    m_HitDamage: 10
+    m_RecoverageHp: 0
+    m_AddScore: -10
+  - m_Type: 0
+    m_FalldownObjectPrefab: {fileID: -136912688131415783, guid: 87aead4f4ac883040a23bfbeaf10f954,
+      type: 3}
+    m_HitDamage: 20
+    m_RecoverageHp: 0
+    m_AddScore: -30
+  - m_Type: 0
+    m_FalldownObjectPrefab: {fileID: 4293127724083864499, guid: 716fa6826f256904eb041fbbae5f7c6c,
+      type: 3}
+    m_HitDamage: 50
+    m_RecoverageHp: 0
+    m_AddScore: -60
+  - m_Type: 0
+    m_FalldownObjectPrefab: {fileID: 4926597741133899312, guid: e3e748548dab01e44a0fab51d852538d,
+      type: 3}
+    m_HitDamage: 40
+    m_RecoverageHp: 0
+    m_AddScore: -20
+  - m_Type: 0
+    m_FalldownObjectPrefab: {fileID: -4030778412366922702, guid: b74b9e8d9315d7941b67df56432e572c,
+      type: 3}
+    m_HitDamage: 100
+    m_RecoverageHp: 0
+    m_AddScore: -99
