@@ -63,6 +63,13 @@ public sealed class PlayerCharacterMovement : MonoBehaviour
         _HorizontalAxisValue = Mathf.Clamp(_HorizontalAxisValue, -1.0f, 1.0f);
     }
 
-
+    /// <summary>
+    /// 현재 캐릭터에 적용된 X축 속력을 반환합니다.
+    /// </summary>
+    /// <returns></returns>
+    public float GetCurrentXSpeed()
+    {
+        return _CharacterController.velocity.x;
+    }
 
 }
