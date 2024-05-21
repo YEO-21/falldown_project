@@ -6,7 +6,7 @@ TextureImporter:
   serializedVersion: 12
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,13 +37,13 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -52,9 +52,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -134,18 +134,127 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: HPImage_3
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 272
+        width: 174
+        height: 223
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76cfeeeb8959ede4aac7fd6124bb7d52
+      internalID: 247198923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HPImage_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 222
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 459ebf046f93efb4b9f0de15eb9269cb
+      internalID: 2017814627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HPImage_13
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 24
+        width: 174
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 391e4ffdff1274e4bb663d7dfb3bf70b
+      internalID: -1642129016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HPImage_19
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 96
+        width: 192
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 15, y: 0, z: 14, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99819166e8258ef4496440e1d5c14776
+      internalID: 715892802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: fff898dc1a6702e43b8e8b69cc6af489
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      HPImage_0: 561565745
+      HPImage_1: 810988723
+      HPImage_10: 691524429
+      HPImage_11: 493580052
+      HPImage_12: 201137191
+      HPImage_13: -1642129016
+      HPImage_14: -1131539740
+      HPImage_15: -1586396012
+      HPImage_16: 1666320014
+      HPImage_17: 1752866984
+      HPImage_18: 1475387806
+      HPImage_19: 715892802
+      HPImage_2: -457837081
+      HPImage_20: -1452603289
+      HPImage_21: -1720520264
+      HPImage_22: -380803892
+      HPImage_23: -1608571425
+      HPImage_24: -585448713
+      HPImage_3: 247198923
+      HPImage_4: 2017814627
+      HPImage_5: 240512955
+      HPImage_6: 1653346381
+      HPImage_7: -186821977
+      HPImage_8: -1104268941
+      HPImage_9: 2046634798
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

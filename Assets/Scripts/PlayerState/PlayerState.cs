@@ -18,12 +18,25 @@ public sealed class PlayerState
     public float score { get; private set; }
 
     /// <summary>
+    /// 체력 수치 변경 시 발생하는 이벤트입니다.
+    /// </summary>
+    public event System.Action<float> onHpChanged;
+
+    /// <summary>
+    /// 점수 변경 시 발생하는 이벤트입니다.
+    /// </summary>
+    public event System.Action<float> onScoreChanged;
+
+    /// <summary>
     /// 플레이어 상태를 초기화합니다.
     /// </summary>
     public void Initialize()
     {
         PlayerHp = 50.0f;
         score = 0.0f;
+
+        // 바인딩된 이벤트 초기화
+        onScoreChanged = null;
     }
 
     /// <summary>
@@ -35,7 +48,7 @@ public sealed class PlayerState
         score += addScore;
         if (score < 0.0f) score = 0.0f;
 
-        Debug.Log("score = " + score);
+        onScoreChanged?.Invoke(score);
     }
 
     /// <summary>
@@ -47,6 +60,7 @@ public sealed class PlayerState
 
         PlayerHp = Mathf.Clamp(PlayerHp + addHp, 0.0f, 100.0f);
 
-        Debug.Log("PlayerHp = " + PlayerHp);
+        // 체력 변경 이벤트 발생
+        onHpChanged?.Invoke(PlayerHp);
     }
 }
