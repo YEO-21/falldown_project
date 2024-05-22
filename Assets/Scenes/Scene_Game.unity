@@ -866,6 +866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd4a3199e493e84f9429a36a6df6f8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_GeneratorDelayScriptableObject: {fileID: 11400000, guid: 43a07b071dedaef49a3a741a82bc055e,
+    type: 2}
   m_FalldownObjectScriptableObject: {fileID: 11400000, guid: 5b96c7bd2e682ae4ea5061f99df98171,
     type: 2}
   m_PlayerCharacter: {fileID: 1446276291}
