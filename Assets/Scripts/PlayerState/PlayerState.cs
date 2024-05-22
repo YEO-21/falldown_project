@@ -28,6 +28,11 @@ public sealed class PlayerState
     public event System.Action<float> onScoreChanged;
 
     /// <summary>
+    /// 플레이어 사망 시 발생하는 이벤트입니다.
+    /// </summary>
+    public event System.Action onPlayerDead;
+
+    /// <summary>
     /// 플레이어 상태를 초기화합니다.
     /// </summary>
     public void Initialize()
@@ -37,6 +42,9 @@ public sealed class PlayerState
 
         // 바인딩된 이벤트 초기화
         onScoreChanged = null;
+        onHpChanged = null;
+        onPlayerDead = null;
+        
     }
 
     /// <summary>
@@ -62,5 +70,12 @@ public sealed class PlayerState
 
         // 체력 변경 이벤트 발생
         onHpChanged?.Invoke(PlayerHp);
+
+        // 체력이 0이 되는 경우 사망
+        if(PlayerHp == 0.0f)
+        {
+            // 사망 이벤트 발생
+            onPlayerDead?.Invoke();
+        }
     }
 }
