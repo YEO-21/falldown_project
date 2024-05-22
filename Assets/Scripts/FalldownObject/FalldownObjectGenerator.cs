@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public sealed class FalldownObjectGenerator : MonoBehaviour
 {
+    [Header("# 생성기 구간 정보 에셋")]
+    public GeneratorSectionInfoScriptableObject m_GeneratorDelayScriptableObject;
+
+
     [Header("# 오브젝트 정보")]
     public FalldownObjectScriptableObject m_FalldownObjectScriptableObject;
 
@@ -17,8 +21,18 @@ public sealed class FalldownObjectGenerator : MonoBehaviour
     public Vector3 m_AreaMin;
     public Vector3 m_AreaMax;
 
+    /// <summary>
+    /// 구간 시작 점수들을 저장해둘 리스트
+    /// </summary>
+    private List<int> _SectionStartScores;
 
-   
+
+    /// <summary>
+    /// 현재 적용된 구간 인덱스입니다.
+    /// </summary>
+    private int _SectionIndex;
+
+
 
     /// <summary>
     /// 랜덤한 생성 위치를 반환합니다.
@@ -26,8 +40,20 @@ public sealed class FalldownObjectGenerator : MonoBehaviour
     public Vector3 randomGenPosition => new Vector3(
                 Random.Range(m_AreaMin.x, m_AreaMax.x), m_AreaMax.y, 0.0f);
 
+    private void Awake()
+    {
+        // 섹션 시작 인덱스를 초기화합니다.
+        _SectionIndex = 0;
+
+        // 구간 시작 점수들을 얻습니다.
+        _SectionStartScores = m_GeneratorDelayScriptableObject.GetSectionStartScores();
+    }
+
     private void Start()
     {
+        // 점수 변경 콜백 등록
+        GameManager.instance.playerState.onScoreChanged += CALLBACK_OnScoreChanged;
+
         // 매번 동일한 결과를 얻을 수 있도록 랜덤 시드를 설정합니다.
         Random.InitState(17);
 
@@ -44,11 +70,18 @@ public sealed class FalldownObjectGenerator : MonoBehaviour
     {
         while(true)
         {
-            // 1초 대기
-            yield return new WaitForSeconds(1.0f);
+            // 현재 구간 정보를 얻습니다.
+            GeneratorSectionInfo currentSectionInfo =
+                m_GeneratorDelayScriptableObject[_SectionIndex];
+
+            // 현재 구간의 딜레이를 얻습니다.
+            float currentSectionDelay = currentSectionInfo.m_GeneratingDelay;
+
+            // 현재 구간의 딜레이만큼 대기
+            yield return new WaitForSeconds(currentSectionDelay);
 
             // 물고기를 생성시킬 확률을 나타냅니다.
-            int fishGenPercentage = 50;
+            int fishGenPercentage = currentSectionInfo.m_FishGeneratorPercentage;
 
             // fishGenPercentage 에 정의된 확률에 따라 생성시킬 오브젝트 타입을 설정합니다.
             FalldownObjectType genObjectType = (Random.Range(1, 101) < fishGenPercentage) ?
@@ -86,6 +119,31 @@ public sealed class FalldownObjectGenerator : MonoBehaviour
         // 생성된 오브젝트의 위치를 랜덤하게 설정합니다.
         generatedFalldownObject.transform.position = randomGenPosition;
     }
+
+    /// <summary>
+    /// 점수 변경 시 호출되는 메서드입니다.
+    /// PlayerState 객체의 onScoreChanged 이벤트에 바인딩됩니다.
+    /// </summary>
+    /// <param name="score"></param>
+    private void CALLBACK_OnScoreChanged(float score)
+    {
+        // 다음 구간이 존재하는 경우에만 확인합니다.
+        if(_SectionStartScores.Count >= _SectionIndex)
+        {
+            // 다음 구간 시작 점수를 얻습니다.
+            int nextSectionStartScore = _SectionStartScores[_SectionIndex + 1];
+
+            // 구간 시작 점수를 넘은 경우
+            if(nextSectionStartScore <= score)
+            {
+                // 다음 구간으로 진입합니다.
+                ++_SectionIndex;
+            }
+            Debug.Log("_SectionInde = " + _SectionIndex);
+        }
+
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
