@@ -39,7 +39,10 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
 
     private void Start()
     {
-        Debug.Log(PlayerUI.GetUI<GameUI>().gameObject.name);
+        //Debug.Log(PlayerUI.GetUI<GameUI>().gameObject.name);
+
+        // 게임 오버 콜백 등록
+        GameManager.instance.playerState.onPlayerDead += CALLBACK_OnGameOver;
     }
 
     private void Update()
@@ -106,6 +109,30 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
 
 
     }
+
+    /// <summary>
+    /// 게임 오버되었을 경우 호출되는 메서드입니다.
+    /// </summary>
+    private void CALLBACK_OnGameOver()
+    {
+        // GoToMainSceneTimer() 코루틴 시작
+        StartCoroutine(GoToMainSceneTimer());
+    }
+
+    /// <summary>
+    /// 메인씬 전환 타이머
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator GoToMainSceneTimer()
+    {
+        // 3초 대기
+        yield return new WaitForSeconds(3.0f);
+
+        // MainScene으로 전환합니다.
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Scene_Main");
+
+    }
+
 
     void IFallingObjectCollisionable.OnTrashObjectDetected(float damage)
     {

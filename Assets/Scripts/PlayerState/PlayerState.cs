@@ -18,6 +18,11 @@ public sealed class PlayerState
     public float score { get; private set; }
 
     /// <summary>
+    /// 일시 정지 상태를 나타냅니다.
+    /// </summary>
+    public bool isPaused { get; private set; }
+
+    /// <summary>
     /// 체력 수치 변경 시 발생하는 이벤트입니다.
     /// </summary>
     public event System.Action<float> onHpChanged;
@@ -78,4 +83,19 @@ public sealed class PlayerState
             onPlayerDead?.Invoke();
         }
     }
+
+    /// <summary>
+    /// 일시 정지 토글
+    /// </summary>
+    /// <returns></returns>
+    public bool TogglePause()
+    {
+        isPaused = !isPaused;
+
+        if (isPaused) Time.timeScale = 0.0f;
+        else Time.timeScale = 1.0f;
+
+        return isPaused;
+    }
+
 }
