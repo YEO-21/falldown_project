@@ -22,6 +22,11 @@ public sealed class FalldownObjectGenerator : MonoBehaviour
     public Vector3 m_AreaMax;
 
     /// <summary>
+    /// 오브젝트 생성 루틴
+    /// </summary>
+    private Coroutine _GeneratorRoutine;
+
+    /// <summary>
     /// 구간 시작 점수들을 저장해둘 리스트
     /// </summary>
     private List<int> _SectionStartScores;
@@ -54,11 +59,15 @@ public sealed class FalldownObjectGenerator : MonoBehaviour
         // 점수 변경 콜백 등록
         GameManager.instance.playerState.onScoreChanged += CALLBACK_OnScoreChanged;
 
+        // 게임 오버 콜백 등록
+        GameManager.instance.playerState.onPlayerDead += CALLBACK_OnGameOver;
+
+
         // 매번 동일한 결과를 얻을 수 있도록 랜덤 시드를 설정합니다.
         Random.InitState(17);
 
         // Falldown 오브젝트 생성 루틴을 시작합니다.
-        StartCoroutine(GenerateFalldownObject());
+        _GeneratorRoutine = StartCoroutine(GenerateFalldownObject());
     }
 
   
@@ -142,6 +151,21 @@ public sealed class FalldownObjectGenerator : MonoBehaviour
             Debug.Log("_SectionInde = " + _SectionIndex);
         }
 
+    }
+
+    /// <summary>
+    ///  게임 오버 시 호출되는 메서드입니다.
+    ///  PlayerState 객체의 onPlayerDead 이벤트에 바인딩됩니다.
+    /// </summary>
+    private void CALLBACK_OnGameOver()
+    {
+        // 생성 루틴 종료
+        if(_GeneratorRoutine != null)
+        {
+            StopCoroutine(_GeneratorRoutine);
+            _GeneratorRoutine = null;
+        }
+       
     }
 
 
