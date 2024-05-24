@@ -117,6 +117,9 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
     {
         // GoToMainSceneTimer() 코루틴 시작
         StartCoroutine(GoToMainSceneTimer());
+
+        // 최고 점수 데이터 갱신
+        UpdateBestScoreData();
     }
 
     /// <summary>
@@ -131,6 +134,18 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
         // MainScene으로 전환합니다.
         UnityEngine.SceneManagement.SceneManager.LoadScene("Scene_Main");
 
+    }
+
+    /// <summary>
+    /// 최고 점수 데이터를 갱신합니다.
+    /// </summary>
+    private void UpdateBestScoreData()
+    {
+        GameManager gameManager = GameManager.instance;
+        PlayerState playerState = gameManager.playerState;
+
+        // 최고 점수 갱신
+        gameManager.scoreFilerReadWriter.UpdateBestScore(playerState.score);
     }
 
 
@@ -149,4 +164,6 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
     {
         GameManager.instance.playerState.AddScore(score);
     }
+
+    
 }

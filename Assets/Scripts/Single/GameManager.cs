@@ -38,17 +38,40 @@ public sealed class GameManager : MonoBehaviour
     public PlayerState playerState { get; } = new();
 
     /// <summary>
+    /// 점수 파일 읽기/쓰기 객체를 나타냅니다.
+    /// </summary>
+    public ScoreFileReadWriter scoreFilerReadWriter { get; } = new();
+
+    /// <summary>
     /// GameManager 객체를 초기화하고, 반환합니다.
     /// </summary>
     /// <returns></returns>
+    /// 
     private static GameManager Initialize()
     {
         if(_Instance == null)
         {
             _Instance = FindObjectOfType<GameManager>();
+
+            // 이 게임 오브젝트가 씬이 변경되어도 제거되지 않도록 합니다.
+            DontDestroyOnLoad(_Instance.gameObject);
         }
+
+        // 점수 파일 읽기/쓰기 객체 초기화
+        _Instance.scoreFilerReadWriter.Initialize();
 
         return _Instance;
     }
+
+    private void Awake()
+    {
+        // 이미 GameManager 객체가 할당되어있으며, 자신이 아닌 경우
+        if(instance != this)
+        {
+            // 이 오브젝트를 제거합니다.
+            Destroy(gameObject);
+        }
+    }
+
 }
 

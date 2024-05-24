@@ -17,7 +17,27 @@ public sealed class MainUI : PlayerUI
         m_StartButton.onClick.AddListener(CALLBACK_OnStartButtonClicked);
         m_QuitButton.onClick.AddListener(CALLBACK_OnQuitButtonClicked);
 
+        // 최고 점수 텍스트  갱신
+        UpdatebestScoreText();
     }
+
+    /// <summary>
+    /// 최고 점수 텍스트를 갱신합니다.
+    /// </summary>
+    private void UpdatebestScoreText()
+    {
+        // 기록된 점수가 존재하는 경우
+        if(GameManager.instance.scoreFilerReadWriter.TryGetBestScore(out float bestScore))
+        {
+            Debug.Log($"최고 점수 파일 읽어봄! [{bestScore}]");
+        }
+        // 기록된 점수가 존재하지 않는 경우
+        else
+        {
+            Debug.LogWarning("최고 점수 파일 읽지 못함!");
+        }
+    }
+
 
     /// <summary>
     /// 시작 버튼 클릭 시 호출되는 메서드
