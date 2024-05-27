@@ -45,7 +45,7 @@ public sealed partial class ScoreFileReadWriter
         // 이전 기록 존재함 상태로 설정
         _PrevScoreDataExist = true;
 
-#if UINITY_EDITOR || UNITY_STANDALONE // 에디터 / Win
+#if UNITY_EDITOR || UNITY_STANDALONE // 에디터 / Win
 
         // 최고 점수 갱신
         UpdateBestScore_Windows(score);
@@ -121,7 +121,7 @@ public sealed partial class ScoreFileReadWriter
 
         // 파일 경로
         string filePath = $"{WINDOWS_BESTSCORE_DIRECTORY}{WINDOWS_BESTSCORE_FILENAME}";
-
+       
         // 최고 점수 파일을 저장할 파일이 존재하지 않는 경우
         if (!File.Exists(filePath))
         {
@@ -137,28 +137,35 @@ public sealed partial class ScoreFileReadWriter
             //    streamWriter1.Dispose();
             //}
 
+           
             // 파일을 읽지 못했기 때문에 함수 호출 종료
             return;
         }
 
+        
         // 최고 점수를 저장하기 위한 변수
         float bestScore = default;
-
+        
         // 파일을 열어 내용을 확인합니다.
         foreach (string line in File.ReadAllLines(filePath))
         {
+            
             if (float.TryParse(line, out bestScore))
             {
+                
                 // 이전 최고점수 기록이 존재함
                 _PrevScoreDataExist = true;
 
                 // 최고 점수를 얻습니다.
                 _BestScore = bestScore;
+                
                 break;
             }
+            
 
 
         }
+        
     }
     // 최고 점수 데이터를 갱신합니다.
     private void UpdateBestScore_Windows(in float score)

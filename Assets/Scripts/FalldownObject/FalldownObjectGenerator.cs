@@ -137,7 +137,7 @@ public sealed class FalldownObjectGenerator : MonoBehaviour
     private void CALLBACK_OnScoreChanged(float score)
     {
         // 다음 구간이 존재하는 경우에만 확인합니다.
-        if(_SectionStartScores.Count >= _SectionIndex)
+        if(_SectionStartScores.Count > _SectionIndex + 1)
         {
             // 다음 구간 시작 점수를 얻습니다.
             int nextSectionStartScore = _SectionStartScores[_SectionIndex + 1];

@@ -39,7 +39,9 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
 
     private void Start()
     {
-        //Debug.Log(PlayerUI.GetUI<GameUI>().gameObject.name);
+        // 가로 축 입력 콜백 등록
+        PlayerUI.GetUI<GameUI>().inputPanel.onHorizontalAxisValueUpdated += 
+            CALLBACK_OnHorizontalInputValueUpdated;
 
         // 게임 오버 콜백 등록
         GameManager.instance.playerState.onPlayerDead += CALLBACK_OnGameOver;
@@ -123,6 +125,16 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
     }
 
     /// <summary>
+    /// 화면 터치 시 또는 입력 시 호출되는 메서드입니다.
+    /// </summary>
+    /// <param name="newAxisValue">수평 축 입력값이 전달됩니다.</param>
+    private void CALLBACK_OnHorizontalInputValueUpdated(float newAxisValue)
+    {   
+        // 수평 축 입력을 추가합니다.
+        _Movement.AddHorizontalMovementInput(newAxisValue);
+    }
+
+    /// <summary>
     /// 메인씬 전환 타이머
     /// </summary>
     /// <returns></returns>
@@ -166,4 +178,6 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
     }
 
     
+
+
 }

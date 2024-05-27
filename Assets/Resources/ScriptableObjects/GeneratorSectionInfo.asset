@@ -15,7 +15,7 @@ MonoBehaviour:
   m_SectionInfo:
   - m_SectionStartScore: 0
     m_GeneratingDelay: 0.8
-    m_FishGeneratorPercentage: 0
+    m_FishGeneratorPercentage: 90
   - m_SectionStartScore: 500
     m_GeneratingDelay: 0.5
     m_FishGeneratorPercentage: 70
