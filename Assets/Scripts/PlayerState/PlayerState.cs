@@ -18,6 +18,11 @@ public sealed class PlayerState
     public float score { get; private set; }
 
     /// <summary>
+    /// 일시 정지 상태를 나타냅니다.
+    /// </summary>
+    public bool isPaused { get; private set; }
+
+    /// <summary>
     /// 체력 수치 변경 시 발생하는 이벤트입니다.
     /// </summary>
     public event System.Action<float> onHpChanged;
@@ -26,6 +31,11 @@ public sealed class PlayerState
     /// 점수 변경 시 발생하는 이벤트입니다.
     /// </summary>
     public event System.Action<float> onScoreChanged;
+
+    /// <summary>
+    /// 플레이어 사망 시 발생하는 이벤트입니다.
+    /// </summary>
+    public event System.Action onPlayerDead;
 
     /// <summary>
     /// 플레이어 상태를 초기화합니다.
@@ -37,6 +47,9 @@ public sealed class PlayerState
 
         // 바인딩된 이벤트 초기화
         onScoreChanged = null;
+        onHpChanged = null;
+        onPlayerDead = null;
+        
     }
 
     /// <summary>
@@ -62,5 +75,27 @@ public sealed class PlayerState
 
         // 체력 변경 이벤트 발생
         onHpChanged?.Invoke(PlayerHp);
+
+        // 체력이 0이 되는 경우 사망
+        if(PlayerHp == 0.0f)
+        {
+            // 사망 이벤트 발생
+            onPlayerDead?.Invoke();
+        }
     }
+
+    /// <summary>
+    /// 일시 정지 토글
+    /// </summary>
+    /// <returns></returns>
+    public bool TogglePause()
+    {
+        isPaused = !isPaused;
+
+        if (isPaused) Time.timeScale = 0.0f;
+        else Time.timeScale = 1.0f;
+
+        return isPaused;
+    }
+
 }
