@@ -60,6 +60,9 @@ public sealed class GameManager : MonoBehaviour
         // 점수 파일 읽기/쓰기 객체 초기화
         _Instance.scoreFilerReadWriter.Initialize();
 
+        // 목표 프레임 설정
+        Application.targetFrameRate = 120;
+
         return _Instance;
     }
 

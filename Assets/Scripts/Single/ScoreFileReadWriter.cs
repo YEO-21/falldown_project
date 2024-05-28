@@ -29,6 +29,11 @@ public sealed partial class ScoreFileReadWriter
     /// </summary>
     private string WINDOWS_BESTSCORE_FILENAME => $"BestScore.txt";
 
+    /// <summary>
+    /// 최고 점수를 저장/로드하기 위한 키
+    /// </summary>
+    private string ANDROID_BESTSCORE_KEY => "bstScr";
+
     public void Initialize()
     {
         // 이전 정보 읽기
@@ -201,15 +206,31 @@ public sealed partial class ScoreFileReadWriter
     // 이전 점수 데이터를 읽어옵니다.
     private void ReadPrevScoreData_Android()
     {
+        if(PlayerPrefs.HasKey(ANDROID_BESTSCORE_KEY))
+        {
+            // 기록 존재 여부 확인됨
+            _PrevScoreDataExist = true;
+
+            // 최고 점수 불러오기
+            _BestScore = PlayerPrefs.GetFloat(ANDROID_BESTSCORE_KEY);
+        }
 
     }
 
     // 최고 점수 데이터를 갱신합니다.
     private void UpdateBestScore_Android(in float score)
     {
+        // 이전 기록보다 낮은 점수인 경우 함수 호출 종료
+        if (_BestScore >= score) return;
+
+        // 높은 점수인 경우
+        // Key   ANDROID_BESTSCORE_KEY
+        // Value  score
+        PlayerPrefs.SetFloat(ANDROID_BESTSCORE_KEY, _BestScore = score);
+
 
     }
-        
+
 
 }
 #endregion
