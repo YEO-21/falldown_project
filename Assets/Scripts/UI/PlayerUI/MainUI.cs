@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,13 +12,37 @@ public sealed class MainUI : PlayerUI
     [Header("# 게임 종료 버튼")]
     public Button m_QuitButton;
 
+    [Header("# 최고 점수 텍스트")]
+    public TMP_Text m_BestScoreText;
+
+
     private void Start()
     {
         // 버튼 이벤트 바인딩
         m_StartButton.onClick.AddListener(CALLBACK_OnStartButtonClicked);
         m_QuitButton.onClick.AddListener(CALLBACK_OnQuitButtonClicked);
 
+        // 최고 점수 텍스트  갱신
+        UpdatebestScoreText();
     }
+
+    /// <summary>
+    /// 최고 점수 텍스트를 갱신합니다.
+    /// </summary>
+    private void UpdatebestScoreText()
+    {
+        // 기록된 점수가 존재하는 경우
+        if(GameManager.instance.scoreFilerReadWriter.TryGetBestScore(out float bestScore))
+        {
+            m_BestScoreText.text = ((int)bestScore).ToString();
+        }
+        // 기록된 점수가 존재하지 않는 경우
+        else
+        {
+            m_BestScoreText.text = "-";
+        }
+    }
+
 
     /// <summary>
     /// 시작 버튼 클릭 시 호출되는 메서드
@@ -39,7 +64,7 @@ public sealed class MainUI : PlayerUI
         UnityEditor.EditorApplication.isPlaying = false;
 
 
-#elif UINITY_STANDALONE // 스탠드얼론 플랫폼(Mac, Windows, Linux)
+#elif UNITY_STANDALONE // 스탠드얼론 플랫폼(Mac, Windows, Linux)
 
         // 어플리케이션 종료
         Application.Quit();

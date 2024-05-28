@@ -39,7 +39,9 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
 
     private void Start()
     {
-        //Debug.Log(PlayerUI.GetUI<GameUI>().gameObject.name);
+        // 가로 축 입력 콜백 등록
+        PlayerUI.GetUI<GameUI>().inputPanel.onHorizontalAxisValueUpdated += 
+            CALLBACK_OnHorizontalInputValueUpdated;
 
         // 게임 오버 콜백 등록
         GameManager.instance.playerState.onPlayerDead += CALLBACK_OnGameOver;
@@ -117,6 +119,19 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
     {
         // GoToMainSceneTimer() 코루틴 시작
         StartCoroutine(GoToMainSceneTimer());
+
+        // 최고 점수 데이터 갱신
+        UpdateBestScoreData();
+    }
+
+    /// <summary>
+    /// 화면 터치 시 또는 입력 시 호출되는 메서드입니다.
+    /// </summary>
+    /// <param name="newAxisValue">수평 축 입력값이 전달됩니다.</param>
+    private void CALLBACK_OnHorizontalInputValueUpdated(float newAxisValue)
+    {   
+        // 수평 축 입력을 추가합니다.
+        _Movement.AddHorizontalMovementInput(newAxisValue);
     }
 
     /// <summary>
@@ -131,6 +146,18 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
         // MainScene으로 전환합니다.
         UnityEngine.SceneManagement.SceneManager.LoadScene("Scene_Main");
 
+    }
+
+    /// <summary>
+    /// 최고 점수 데이터를 갱신합니다.
+    /// </summary>
+    private void UpdateBestScoreData()
+    {
+        GameManager gameManager = GameManager.instance;
+        PlayerState playerState = gameManager.playerState;
+
+        // 최고 점수 갱신
+        gameManager.scoreFilerReadWriter.UpdateBestScore(playerState.score);
     }
 
 
@@ -149,4 +176,8 @@ public sealed class PlayerCharacter : MonoBehaviour, IFallingObjectCollisionable
     {
         GameManager.instance.playerState.AddScore(score);
     }
+
+    
+
+
 }

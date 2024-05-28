@@ -17,8 +17,16 @@ public sealed class GameUI : PlayerUI
     [Header("# GoToMain Button")]
     public Button m_GoToMainButton;
 
+    /// <summary>
+    /// 입력 패널 객체를 나타냅니다.
+    /// </summary>
+    private InputPanel _InputPanel;
 
-
+    /// <summary>
+    /// 입력 패널에 대한 읽기 전용 프로퍼티입니다.
+    /// </summary>
+    public InputPanel inputPanel => _InputPanel ??
+        (_InputPanel = GetComponentInChildren<InputPanel>());
 
     private void Start()
     {
